@@ -1,4 +1,4 @@
-import { getProducts, login, resources } from '@/lib/api-utils';
+import { getProducts, login } from '@/lib/api-utils';
 import axiosError from '@/lib/axiosError';
 import { useEffect } from 'react';
 
