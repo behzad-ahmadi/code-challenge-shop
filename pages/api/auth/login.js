@@ -1,7 +1,7 @@
 import { apiBaseUrl } from '@/lib/api-utils';
+import { sessionOptions } from '@/lib/session';
 import axios from 'axios';
 import { withIronSessionApiRoute } from 'iron-session/next';
-import { sessionOptions } from 'lib/session';
 
 export default withIronSessionApiRoute(async (req, res) => {
   const { username, password } = req.body;
@@ -14,7 +14,7 @@ export default withIronSessionApiRoute(async (req, res) => {
         headers: { 'Content-Type': 'application/json', timeout: 5000 },
       }
     );
-
+    // console.log('user', data);
     const user = { isLoggedIn: true, ...data };
 
     req.session.user = user;
