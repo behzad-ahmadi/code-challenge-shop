@@ -11,7 +11,8 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
@@ -99,14 +100,16 @@ export default function Login() {
             error={formik.errors.password && formik.touched.password}
           />
 
-          <Button
+          <LoadingButton
             type='submit'
             fullWidth
             variant='contained'
             sx={{ mt: 3, mb: 2 }}
+            loading={formik.isSubmitting}
           >
             Log in
-          </Button>
+          </LoadingButton>
+
           <Grid container>
             <Grid item xs textAlign={'end'}>
               <Link href='/' variant='body2'>
