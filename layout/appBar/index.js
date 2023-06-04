@@ -2,41 +2,27 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { useAppTheme } from '@/hooks/useAppTheme';
-import { Avatar, Menu, MenuItem } from '@mui/material';
 import useUser from '@/hooks/useUser';
-import { logout } from '@/lib/api-utils';
-import { useRouter } from 'next/router';
 import useAppBar from '@/hooks/useAppBar';
-import { pageRoutes } from '@/lib/config';
+import Title from './title';
+import Profile from './profile';
+import { Search, ShoppingCartOutlined } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+import SearchIcon from './searchIcon';
+import Cart from './cart';
+import BackButton from './backButton';
 
 export default function AppBarSection() {
-  const { toggleMode, theme } = useAppTheme();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const router = useRouter();
-  const { user, mutateUser } = useUser({ redirectTo: '/auth/login' });
+  const { user } = useUser({ redirectTo: '/auth/login' });
   const appBar = useAppBar();
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const logoutHandler = async () => {
-    mutateUser(await logout());
-  };
-
-  const loginHandler = () => {
-    router.push('/auth/login');
-  };
+  const [itemsVisible, setItemsVisible] = React.useState({
+    title: false,
+    card: false,
+    avatar: false,
+    searchIcon: false,
+    searchbox: false,
+    backButton: false,
+  });
 
   // const path = router.pathname;
 
@@ -55,41 +41,19 @@ export default function AppBarSection() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed'>
         <Toolbar>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-            {appBar?.title}
-          </Typography>
+          <BackButton />
 
-          <IconButton onClick={toggleMode} color='inherit'>
-            {theme.palette.mode === 'dark' ? <Brightness4 /> : <Brightness7 />}
-          </IconButton>
+          {/* Page title */}
+          <Title title={appBar?.title || 'Shop'} />
 
-          <IconButton onClick={handleMenu}>
-            <Avatar src={user?.image} sx={{ backgroundColor: 'gray' }}></Avatar>
-          </IconButton>
+          {/* Search icon */}
+          <SearchIcon />
 
-          <Menu
-            id='menu-appbar'
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {!user?.isLoggedIn && (
-              <MenuItem onClick={loginHandler}>Login</MenuItem>
-            )}
+          {/* Cart */}
+          <Cart />
 
-            {user?.isLoggedIn && (
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-            )}
-          </Menu>
+          {/* Avatar */}
+          <Profile />
         </Toolbar>
       </AppBar>
 
