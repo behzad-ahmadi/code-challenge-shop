@@ -37,6 +37,8 @@ export default function AppBarSection() {
     router.push('/auth/login');
   };
 
+  if (!appBar.showAppBar()) return <></>;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed'>
