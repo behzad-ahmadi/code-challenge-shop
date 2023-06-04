@@ -1,7 +1,10 @@
 import Home from '@/components/pages/home';
+import useAppBar from '@/hooks/useAppBar';
 import Head from 'next/head';
 
 export default function Home_page() {
+  useAppBar().setTitle('Home');
+
   return (
     <>
       <Head>
