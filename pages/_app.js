@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeContextProvider>
       <AppBarProvider>
-        <ToastContainer />
+        <ToastContainer position='top-center' />
         <Layout>
           <Component {...pageProps} />
         </Layout>
