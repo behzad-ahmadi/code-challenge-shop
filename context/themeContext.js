@@ -31,7 +31,7 @@ export const ThemeContextProvider = ({ children }) => {
   const mutate = (mode) => setMode(mode);
 
   return (
-    // retun initialed theme context provider
+    // return initialed theme context provider
     <ThemeContext.Provider value={{ mode, toggleMode, mutate, theme }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
