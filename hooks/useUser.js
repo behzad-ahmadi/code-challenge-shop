@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import useSWR from 'swr';
+import { getUser } from '@/lib/api-utils';
+import { toast } from 'react-toastify';
 
 export default function useUser({
   redirectTo = '',
   redirectIfFound = false,
 } = {}) {
-  const { data: user, mutate: mutateUser } = useSWR('/api/user');
+  const {
+    data: user,
+    mutate: mutateUser,
+    error,
+  } = useSWR('/api/user', () => getUser());
 
   useEffect(() => {
+    if (error) toast('Error in getting user info', { type: 'error' });
     // if no redirect needed, just return (example: already on /dashboard)
     // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
     if (!redirectTo || !user) return;
@@ -21,7 +28,7 @@ export default function useUser({
     ) {
       Router.push(redirectTo);
     }
-  }, [user, redirectIfFound, redirectTo]);
+  }, [user, redirectIfFound, redirectTo, error]);
 
   return { user, mutateUser };
 }
