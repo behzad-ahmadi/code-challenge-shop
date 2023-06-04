@@ -6,8 +6,6 @@ import useUser from '@/hooks/useUser';
 import useAppBar from '@/hooks/useAppBar';
 import Title from './title';
 import Profile from './profile';
-import { Search, ShoppingCartOutlined } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
 import SearchIcon from './searchIcon';
 import Cart from './cart';
 import BackButton from './backButton';
