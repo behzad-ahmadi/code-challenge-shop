@@ -5,11 +5,14 @@ import { useRouter } from 'next/router';
 export default function BackButton({ path }) {
   const router = useRouter();
 
-  const clickHandler = () => router.replace(path);
+  const clickHandler = () => {
+    if (!path) router.back();
+    else router.replace(path);
+  };
 
   return (
     <>
-      <IconButton onClick={clickHandler}>
+      <IconButton onClick={clickHandler} sx={{ mr: 1 }}>
         <ArrowBackIos fontSize='small' />
       </IconButton>
     </>
