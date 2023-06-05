@@ -2,7 +2,16 @@ import { useAppTheme } from '@/hooks/useAppTheme';
 import useUser from '@/hooks/useUser';
 import { logout } from '@/lib/api-utils';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
+import {
+  Avatar,
+  Dialog,
+  Drawer,
+  IconButton,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -11,6 +20,8 @@ export default function Profile() {
   const [anchorEl, setAnchorEl] = useState(null);
   const router = useRouter();
   const { user, mutateUser } = useUser();
+  const mui_theme = useTheme();
+  const largescreen = useMediaQuery(mui_theme.breakpoints.up('sm'));
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,37 +43,55 @@ export default function Profile() {
 
   return (
     <>
-      <IconButton onClick={handleMenu} sx={{ ml: 1 }}>
+      <IconButton onClick={handleMenu}>
         <Avatar src={user?.image} sx={{ backgroundColor: 'gray' }} />
       </IconButton>
 
-      <Menu
-        id='menu-appbar'
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {!user?.isLoggedIn && <MenuItem onClick={loginHandler}>Login</MenuItem>}
+      {largescreen && (
+        <Menu
+          id='menu-appbar'
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {!user?.isLoggedIn && (
+            <MenuItem onClick={loginHandler}>Login</MenuItem>
+          )}
 
-        <MenuItem>
-          <IconButton onClick={toggleMode} color='inherit'>
-            {theme.palette.mode === 'dark' ? <Brightness4 /> : <Brightness7 />}
-          </IconButton>
-        </MenuItem>
+          <MenuItem>
+            <IconButton onClick={toggleMode} color='inherit'>
+              {theme.palette.mode === 'dark' ? (
+                <Brightness4 />
+              ) : (
+                <Brightness7 />
+              )}
+            </IconButton>
+          </MenuItem>
 
-        {user?.isLoggedIn && (
+          {user?.isLoggedIn && (
+            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+          )}
+        </Menu>
+      )}
+
+      {!largescreen && (
+        <Drawer
+          anchor={'bottom'}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
           <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-        )}
-      </Menu>
+        </Drawer>
+      )}
     </>
   );
 }
