@@ -1,5 +1,5 @@
-import ProductDetail from '@/components/pages/products/productDetail';
+import ProductDetails from '@/components/pages/products/productDetails';
 
 export default function ProductDetailPage() {
-  return <ProductDetail />;
+  return <ProductDetails />;
 }
