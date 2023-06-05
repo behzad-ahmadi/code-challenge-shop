@@ -9,9 +9,9 @@ export default function Home() {
   const productsHandler = () => {
     router.push('/products');
   };
+
   const productDetailHandler = () => {
-    // router.push('/products/1');
-    appBr.setTitle('Home');
+    router.push('/products/1');
   };
 
   return (
