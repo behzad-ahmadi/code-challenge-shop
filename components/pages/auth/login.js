@@ -12,9 +12,9 @@ import {
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import LoadingButton from '@mui/lab/LoadingButton';
-import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import { useEffect } from 'react';
 
 export default function Login() {
   const { mutateUser, user: myUser } = useUser({
@@ -35,8 +35,8 @@ export default function Login() {
 
       try {
         const { user } = await login({
-          username: 'fokillq',
-          password: 'xZnWSWnqH',
+          username: values.username,
+          password: values.password,
         });
 
         mutateUser();
@@ -53,6 +53,11 @@ export default function Login() {
       }
     },
   });
+
+  useEffect(() => {
+    formik.setFieldValue('username', 'fokillq');
+    formik.setFieldValue('password', 'xZnWSWnqH');
+  }, []);
 
   return (
     <Container component='main' maxWidth='xs'>
