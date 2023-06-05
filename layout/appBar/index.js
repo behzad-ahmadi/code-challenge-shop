@@ -9,49 +9,104 @@ import Profile from './profile';
 import SearchIcon from './searchIcon';
 import Cart from './cart';
 import BackButton from './backButton';
+import { pageRoutes } from '@/lib/config';
+import { useRouter } from 'next/router';
 
 export default function AppBarSection() {
   const { user } = useUser({ redirectTo: '/auth/login' });
+  const router = useRouter();
   const appBar = useAppBar();
-  const [itemsVisible, setItemsVisible] = React.useState({
+  const [visibleItems, setVisibleItems] = React.useState({
+    showAppBar: false,
     title: false,
-    card: false,
-    avatar: false,
+    cart: false,
+    profile: false,
     searchIcon: false,
     searchbox: false,
     backButton: false,
   });
 
-  // const path = router.pathname;
+  const path = router.pathname;
 
-  // switch (path) {
-  //   case pageRoutes.login:
-  //     return <></>;
-  //   default:
-  //     break;
-  // }
+  React.useEffect(() => {
+    switch (path) {
+      case pageRoutes.login:
+        setVisibleItems({
+          showAppBar: false,
+          profile: false,
+          cart: false,
+          searchIcon: false,
+          searchbox: false,
+          title: false,
+          backButton: false,
+        });
+        break;
+      case pageRoutes.home:
+        setVisibleItems({
+          showAppBar: true,
+          profile: true,
+          cart: false,
+          searchIcon: false,
+          searchbox: false,
+          title: true,
+          backButton: false,
+        });
+        break;
+      case pageRoutes.products:
+        setVisibleItems({
+          showAppBar: true,
+          profile: true,
+          cart: true,
+          searchIcon: true,
+          searchbox: false,
+          title: true,
+          backButton: true,
+        });
+        break;
+      case pageRoutes.productDetails:
+        setVisibleItems({
+          showAppBar: true,
+          profile: true,
+          cart: true,
+          searchIcon: true,
+          searchbox: false,
+          title: true,
+          backButton: true,
+        });
+        break;
+      default:
+        setVisibleItems({
+          showAppBar: true,
+          title: false,
+          cart: false,
+          profile: true,
+          searchIcon: false,
+          searchbox: false,
+          backButton: false,
+        });
+        break;
+    }
+  }, [path]);
 
-  // React.useMemo( () => {  })
-
-  // if (!appBar.showAppBar()) return <></>;
+  if (!visibleItems.showAppBar) return <></>;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed'>
         <Toolbar>
-          <BackButton />
+          {visibleItems.backButton && <BackButton path={''} />}
 
           {/* Page title */}
-          <Title title={appBar?.title || 'Shop'} />
+          {visibleItems.title && <Title title={appBar?.title || 'Shop'} />}
 
           {/* Search icon */}
-          <SearchIcon />
+          {visibleItems.searchIcon && <SearchIcon />}
 
           {/* Cart */}
-          <Cart />
+          {visibleItems.cart && <Cart />}
 
           {/* Avatar */}
-          <Profile />
+          {visibleItems.profile && <Profile />}
         </Toolbar>
       </AppBar>
 
