@@ -64,6 +64,7 @@ export default function ProductDetailsCard({
             <Typography>{rating}</Typography>
           </Box>
         </CardContent>
+
         {showActions && (
           <CardActions sx={{ px: 0 }}>
             <Box
