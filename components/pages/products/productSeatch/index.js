@@ -12,6 +12,7 @@ import useSWR from 'swr';
 import { useFormik } from 'formik';
 import { fetcher } from '@/lib/fetchers';
 import SkeletonCard from '@/components/common/card/productListCard/skeletonCard';
+import { toast } from 'react-toastify';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
@@ -22,12 +23,12 @@ export default function ProductSearch({ open, onClose }) {
   // const [data, setData] = React.useState([]);
 
   const { data, isLoading, error } = useSWR(
-    () => 'https://dummyjson.com/products/search?q=phone',
+    () => 'https://dummyjson.com/products/search?q=' + formik.values.search,
     fetcher
   );
 
   // if (error) console.log('error', error);
-  if (data) console.log('da', data);
+  if (error) toast('Fetch product list error');
 
   return (
     <div>
