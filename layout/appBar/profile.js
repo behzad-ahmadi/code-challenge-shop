@@ -23,6 +23,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function Profile() {
   const { toggleMode, theme } = useAppTheme();
@@ -31,6 +32,7 @@ export default function Profile() {
   const { user, mutateUser } = useUser();
   const mui_theme = useTheme();
   const largescreen = useMediaQuery(mui_theme.breakpoints.up('sm'));
+  const [disabled, setDisabled] = useState(false);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,8 +43,15 @@ export default function Profile() {
   };
 
   const logoutHandler = async () => {
-    mutateUser(await logout());
-    handleClose();
+    try {
+      setDisabled(true);
+      mutateUser(await logout());
+      handleClose();
+    } catch (error) {
+      toast('Log out error', { type: 'error' });
+    } finally {
+      setDisabled(false);
+    }
   };
 
   const loginHandler = () => {
@@ -82,7 +91,11 @@ export default function Profile() {
       )}
 
       {user?.isLoggedIn && (
-        <MenuItem onClick={logoutHandler} sx={{ display: 'flex', gap: 2 }}>
+        <MenuItem
+          onClick={logoutHandler}
+          sx={{ display: 'flex', gap: 2 }}
+          disabled={disabled}
+        >
           <PowerSettingsNew />
           Logout
         </MenuItem>
