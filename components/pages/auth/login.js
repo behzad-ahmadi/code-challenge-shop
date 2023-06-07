@@ -15,11 +15,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useEffect } from 'react';
+import { pageRoutes } from '@/lib/config';
 
 export default function Login() {
   const { mutateUser, user: myUser } = useUser({
     redirectIfFound: true,
-    redirectTo: '/',
+    redirectTo: pageRoutes.products,
   });
 
   const formik = useFormik({
