@@ -7,39 +7,64 @@ import Slide from '@mui/material/Slide';
 import { ArrowBackIos } from '@mui/icons-material';
 import SearchBox from './searchbox';
 import ProductListCard from '@/components/common/card/productListCard';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import useSWR from 'swr';
+import { useFormik } from 'formik';
+import { fetcher } from '@/lib/fetchers';
+import SkeletonCard from '@/components/common/card/productListCard/skeletonCard';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
 export default function ProductSearch({ open, onClose }) {
+  const formik = useFormik({ initialValues: { search: '' } });
+  // const [data, setData] = React.useState([]);
+
+  const { data, isLoading, error } = useSWR(
+    () => 'https://dummyjson.com/products/search?q=phone',
+    fetcher
+  );
+
+  // if (error) console.log('error', error);
+  if (data) console.log('da', data);
+
   return (
     <div>
-      <Dialog
+      {/* <Dialog
         fullScreen
         open={open}
         onClose={onClose}
         TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: 'sticky' }}>
-          <Toolbar>
-            <IconButton edge='start' color='inherit' onClick={onClose}>
-              <ArrowBackIos />
-            </IconButton>
+      > */}
+      {/* <AppBar sx={{ position: 'sticky' }}>
+        <Toolbar>
+          <IconButton edge='start' color='inherit' onClick={onClose}>
+            <ArrowBackIos />
+          </IconButton>
 
-            <SearchBox />
-          </Toolbar>
-        </AppBar>
-
-        <Box display={'flex'} justifyContent={'center'} mt={1}>
-          <ProductListCard />
-        </Box>
-
-        <Box display={'flex'} justifyContent={'center'} mt={1}>
-          <ProductListCard />
-        </Box>
-      </Dialog>
+          <SearchBox formik={formik} />
+        </Toolbar>
+      </AppBar> */}
+      {data?.products?.map((p, idx) => {
+        return (
+          <Box display={'flex'} justifyContent={'center'} mt={1} key={idx}>
+            <ProductListCard product={p} onCloseDialog={onClose} />
+          </Box>
+        );
+      })}
+      {isLoading &&
+        [1, 2].map((s, i) => (
+          <Box display={'flex'} justifyContent={'center'} mt={1} key={i}>
+            <SkeletonCard />
+          </Box>
+        ))}
+      {data?.products?.length === 0 && (
+        <Typography textAlign={'center'} variant='h6' mt={3}>
+          No matches found
+        </Typography>
+      )}
+      {/* </Dialog> */}
     </div>
   );
 }
