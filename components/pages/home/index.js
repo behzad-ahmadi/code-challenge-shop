@@ -1,7 +1,5 @@
-import useAppBar from '@/hooks/useAppBar';
 import { Box, Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 export default function Home() {
   const router = useRouter();
@@ -9,16 +7,6 @@ export default function Home() {
   const productsHandler = () => {
     router.push('/products');
   };
-
-  const productDetailHandler = () => {
-    router.push('/products/1');
-  };
-
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    console.log('products', ...products);
-  }, [products]);
 
   return (
     <Box
@@ -32,12 +20,6 @@ export default function Home() {
       <Button onClick={productsHandler} variant='outlined'>
         Goto Products
       </Button>
-
-      <Button onClick={productDetailHandler} variant='outlined'>
-        Goto Product Detail
-      </Button>
-
-      {products?.map((p) => p?.count)}
     </Box>
   );
 }
