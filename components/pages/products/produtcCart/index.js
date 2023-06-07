@@ -3,12 +3,21 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import { ArrowBackIos } from '@mui/icons-material';
-import { Drawer, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Container,
+  Drawer,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { useTheme } from '@emotion/react';
+import ProductCartCard from '@/components/common/card/productCartCard';
+import useCart from '@/hooks/useCart';
 
 export default function ProductCart({ onClose, open }) {
   const theme = useTheme();
-  const largeScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const largeScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  const cart = useCart();
 
   return (
     <div>
@@ -19,10 +28,10 @@ export default function ProductCart({ onClose, open }) {
         PaperProps={
           largeScreen
             ? {
-                sx: { width: '100%' },
+                sx: { width: 'auto', minWidth: 350 },
               }
             : {
-                sx: { width: 'auto' },
+                sx: { width: '100%' },
               }
         }
       >
@@ -35,6 +44,14 @@ export default function ProductCart({ onClose, open }) {
             <Typography> My Cart </Typography>
           </Toolbar>
         </AppBar>
+
+        <Container sx={{ mt: 4 }}>
+          {cart.products?.map((p, idx) => (
+            <Box mb={2} key={idx}>
+              <ProductCartCard product={p} />
+            </Box>
+          ))}
+        </Container>
         {/* {list(anchor)} */}
       </Drawer>
     </div>
