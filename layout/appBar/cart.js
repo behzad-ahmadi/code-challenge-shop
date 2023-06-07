@@ -3,7 +3,7 @@ import { ShoppingCartOutlined } from '@mui/icons-material';
 import { Badge, IconButton } from '@mui/material';
 import { useState } from 'react';
 
-export default function Cart({ itemCount }) {
+export default function Cart({ badeTitle }) {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
@@ -16,7 +16,7 @@ export default function Cart({ itemCount }) {
           setOpen(true);
         }}
       >
-        <Badge badgeContent={itemCount} color='error'>
+        <Badge badgeContent={badeTitle} color='error'>
           <ShoppingCartOutlined />
         </Badge>
       </IconButton>
