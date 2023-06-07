@@ -1,10 +1,19 @@
 import { useAppTheme } from '@/hooks/useAppTheme';
 import useUser from '@/hooks/useUser';
 import { logout } from '@/lib/api-utils';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
+import {
+  Brightness4,
+  Brightness7,
+  Flag,
+  Login,
+  Phone,
+  PowerSettingsNew,
+} from '@mui/icons-material';
 import {
   Avatar,
+  Box,
   Dialog,
+  Divider,
   Drawer,
   IconButton,
   Menu,
@@ -41,6 +50,46 @@ export default function Profile() {
     handleClose();
   };
 
+  const MenuItems = () => (
+    <>
+      <MenuItem onClick={toggleMode}>
+        <IconButton color='inherit'>
+          {theme.palette.mode === 'dark' ? <Brightness4 /> : <Brightness7 />}
+        </IconButton>
+      </MenuItem>
+
+      <Divider />
+
+      <MenuItem sx={{ display: 'flex', gap: 2 }}>
+        <Flag />
+        About Us
+      </MenuItem>
+
+      <Divider />
+
+      <MenuItem sx={{ display: 'flex', gap: 2 }}>
+        <Phone />
+        Contact Us
+      </MenuItem>
+
+      <Divider />
+
+      {!user?.isLoggedIn && (
+        <MenuItem onClick={loginHandler} sx={{ display: 'flex', gap: 5 }}>
+          <Login />
+          Login
+        </MenuItem>
+      )}
+
+      {user?.isLoggedIn && (
+        <MenuItem onClick={logoutHandler} sx={{ display: 'flex', gap: 2 }}>
+          <PowerSettingsNew />
+          Logout
+        </MenuItem>
+      )}
+    </>
+  );
+
   return (
     <>
       <IconButton onClick={handleMenu}>
@@ -63,23 +112,7 @@ export default function Profile() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {!user?.isLoggedIn && (
-            <MenuItem onClick={loginHandler}>Login</MenuItem>
-          )}
-
-          <MenuItem>
-            <IconButton onClick={toggleMode} color='inherit'>
-              {theme.palette.mode === 'dark' ? (
-                <Brightness4 />
-              ) : (
-                <Brightness7 />
-              )}
-            </IconButton>
-          </MenuItem>
-
-          {user?.isLoggedIn && (
-            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-          )}
+          <MenuItems />
         </Menu>
       )}
 
@@ -89,7 +122,7 @@ export default function Profile() {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+          <MenuItems />
         </Drawer>
       )}
     </>
