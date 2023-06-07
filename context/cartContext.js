@@ -2,18 +2,19 @@ const { createContext, useState } = require('react');
 
 const CartContext = createContext({
   add: (product) => {},
+  addToCard: (product, count) => {},
   remove: (product) => {},
   products: [],
-  total: 0,
+  productCount: (id) => {},
+  totalPrice: 0,
 });
 
 export const CartContextProvider = (props) => {
   const [products, setProducts] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  //   add product to cart
+  // add product to cart
   const add = (product) => {
-    console.log('ppp', product);
     //check if produtc is added before
     const _product = products?.find((p) => p?.id === product.id);
 
@@ -21,27 +22,25 @@ export const CartContextProvider = (props) => {
       // add product to list
       product.quantity = 1;
       setProducts((current) => [...current, product]);
-
-      setTotal(total + 1);
-
-      return;
     }
 
     // update product quantity in list
-    setProducts((prevState) => {
-      const newState = prevState.map((p) => {
-        if (p.id === product.id) return { ...p, quantity: p.quantity + 1 };
+    else
+      setProducts((prevState) => {
+        const newState = prevState.map((p) => {
+          if (p.id === product.id) return { ...p, quantity: p.quantity + 1 };
 
-        return p;
+          return p;
+        });
+
+        return newState;
       });
 
-      setTotal(total + 1);
-
-      return newState;
-    });
+    // total price
+    setTotalPrice(totalPrice + product.price);
   };
 
-  //   remove product from cart
+  // remove product from cart
   const remove = (product) => {
     //check if product exsits in list
     const _product = products?.find((p) => p?.id);
@@ -55,25 +54,59 @@ export const CartContextProvider = (props) => {
           return p;
         });
 
-        setTotal(total - 1);
+        return newState;
+      });
+    }
+
+    // if quantity ==1 remove it from list
+    else if (_product && _product.quantity === 1) {
+      setProducts((prevState) => prevState.filter((p) => p.id != product.id));
+    }
+
+    // total price
+    setTotalPrice(totalPrice - product.price);
+  };
+
+  const addToCard = (product, count) => {
+    //check if produtc is added before
+    const _product = products?.find((p) => p?.id === product.id);
+
+    if (!_product) {
+      // add product to list
+      product.quantity = count;
+      setProducts((current) => [...current, product]);
+    }
+
+    // update product quantity in list
+    else
+      setProducts((prevState) => {
+        const newState = prevState.map((p) => {
+          if (p.id === product.id)
+            return { ...p, quantity: p.quantity + count };
+
+          return p;
+        });
 
         return newState;
       });
 
-      return;
-    }
-
-    // if quantity ==1 remove it from list
-    if (_product && _product.quantity === 1) {
-      setProducts((prevState) => prevState.filter((p) => p.id != product.id));
-
-      setTotal(total - 1);
-
-      return;
-    }
+    // total price
+    setTotalPrice(totalPrice + product.price * count);
   };
 
-  const contextValue = { add, remove, products, total };
+  // one product count
+  const productCount = (id) => {
+    return products.find((p) => p.id === id)?.quantity || 0;
+  };
+
+  const contextValue = {
+    add,
+    remove,
+    addToCard,
+    products,
+    productCount,
+    totalPrice,
+  };
   return (
     <CartContext.Provider value={contextValue}>
       {props.children}
