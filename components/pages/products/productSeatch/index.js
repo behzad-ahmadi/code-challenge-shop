@@ -20,7 +20,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function ProductSearch({ open, onClose }) {
   const formik = useFormik({ initialValues: { search: '' } });
-  // const [data, setData] = React.useState([]);
 
   const { data, isLoading, error } = useSWR(
     () => 'https://dummyjson.com/products/search?q=' + formik.values.search,
