@@ -1,29 +1,26 @@
-import useCart from '@/hooks/useCart';
-import { Button } from '@mui/material';
+import ProductDetailsCard from '@/components/common/card/productDetailsCard';
+import { pageRoutes } from '@/lib/config';
+import { Box } from '@mui/material';
+import { useRouter } from 'next/router';
 
-export default function Products() {
-  const cart = useCart();
+export default function Products({ products }) {
+  const router = useRouter();
 
-  console.log('c', cart.products);
+  const cardClickHandler = (id) => {
+    router.push(pageRoutes.productDetails(id));
+  };
+
   return (
-    <>
-      Products
-      <Button
-        onClick={() => {
-          cart.add({ id: 1 });
-        }}
-        variant='outlined'
-      >
-        ADD
-      </Button>
-      <Button
-        onClick={() => {
-          cart.remove({ id: 1 });
-        }}
-        variant='outlined'
-      >
-        Remove
-      </Button>
-    </>
+    <Box alignItems={'center'} display={'flex'} flexDirection={'column'}>
+      {products.products?.map((p, idx) => (
+        <ProductDetailsCard
+          product={p}
+          showActions={false}
+          mainSx={{ mb: 3 }}
+          onClick={() => cardClickHandler(p.id)}
+          key={idx}
+        />
+      ))}
+    </Box>
   );
 }
