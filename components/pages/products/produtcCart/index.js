@@ -5,7 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import { ArrowBackIos } from '@mui/icons-material';
 import {
   Box,
+  Button,
   Container,
+  Divider,
   Drawer,
   Typography,
   useMediaQuery,
@@ -52,7 +54,33 @@ export default function ProductCart({ onClose, open }) {
             </Box>
           ))}
         </Container>
-        {/* {list(anchor)} */}
+
+        <Box mt={4} mx={2}>
+          <Divider />
+
+          {/* Product count */}
+          <Box display={'flex'} justifyContent={'space-between'} mt={2}>
+            <Typography mt={1}>Product count: </Typography>
+            {cart.products.length}
+          </Box>
+
+          {/* Toatal */}
+          <Box display={'flex'} justifyContent={'space-between'}>
+            <Typography mt={1}>Toatal: </Typography>
+
+            <Typography>${cart.totalPrice}</Typography>
+          </Box>
+        </Box>
+
+        {/* Pay button */}
+        <Box textAlign={'center'}>
+          <Button
+            sx={{ mt: 4, textTransform: 'capitalize' }}
+            variant='contained'
+          >
+            Pay via papal
+          </Button>
+        </Box>
       </Drawer>
     </div>
   );
