@@ -11,7 +11,7 @@ export default function Products({ products }) {
   };
 
   return (
-    <Box alignItems={'center'} display={'flex'} flexDirection={'column'}>
+    <Box alignItems={'center'} display={'flex'} flexDirection={'column'} pt={3}>
       {products.products?.map((p, idx) => (
         <ProductDetailsCard
           product={p}
