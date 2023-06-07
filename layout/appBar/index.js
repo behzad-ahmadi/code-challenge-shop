@@ -64,7 +64,7 @@ export default function AppBarSection() {
           backButton: true,
         });
         break;
-      case pageRoutes.productDetails:
+      case pageRoutes.productDetails_:
         setVisibleItems({
           showAppBar: true,
           profile: true,
@@ -104,7 +104,7 @@ export default function AppBarSection() {
           {visibleItems.searchIcon && <SearchIcon />}
 
           {/* Cart */}
-          {visibleItems.cart && <Cart badeTitle={cart.total} />}
+          {visibleItems.cart && <Cart badeTitle={cart.products.length} />}
 
           {/* Avatar */}
           {visibleItems.profile && <Profile />}
