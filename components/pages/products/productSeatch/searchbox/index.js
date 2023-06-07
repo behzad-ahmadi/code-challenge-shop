@@ -26,14 +26,21 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-export default function SearchBox() {
+export default function SearchBox({ formik }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
-        <InputBase sx={{ width: '100%', pl: 7, pr: 3 }}></InputBase>
+        <InputBase
+          sx={{ width: '100%', pl: 7, pr: 3 }}
+          name='search'
+          value={formik.values.search}
+          onChange={formik.handleChange}
+          onBlur={formik.onBlur}
+          autoFocus={true}
+        ></InputBase>
         {/* <TextField
           hiddenLabel
           fullWidth
