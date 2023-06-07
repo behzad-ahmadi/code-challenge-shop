@@ -42,6 +42,7 @@ export default function ProductCartCard({ product = {} }) {
             }}
             quality={100}
             src={images[0]}
+            alt='product image'
           />
         ) : (
           <Skeleton
