@@ -11,9 +11,10 @@ import Cart from './cart';
 import BackButton from './backButton';
 import { pageRoutes } from '@/lib/config';
 import { useRouter } from 'next/router';
+import useCart from '@/hooks/useCart';
 
 export default function AppBarSection() {
-  const { user } = useUser({ redirectTo: '/auth/login' });
+  useUser({ redirectTo: '/auth/login' });
   const router = useRouter();
   const appBar = useAppBar();
   const [visibleItems, setVisibleItems] = React.useState({
@@ -25,8 +26,8 @@ export default function AppBarSection() {
     searchbox: false,
     backButton: false,
   });
-
   const path = router.pathname;
+  const cart = useCart();
 
   React.useEffect(() => {
     switch (path) {
@@ -103,7 +104,7 @@ export default function AppBarSection() {
           {visibleItems.searchIcon && <SearchIcon />}
 
           {/* Cart */}
-          {visibleItems.cart && <Cart />}
+          {visibleItems.cart && <Cart badeTitle={cart.total} />}
 
           {/* Avatar */}
           {visibleItems.profile && <Profile />}
