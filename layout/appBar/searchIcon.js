@@ -26,7 +26,7 @@ export default function SearchIcon() {
         <Search fontSize='medium' />
       </IconButton>
 
-      {/* <ProductSearch onClose={handleClose} open={open} /> */}
+      <ProductSearch onClose={handleClose} open={open} />
     </>
   );
 }

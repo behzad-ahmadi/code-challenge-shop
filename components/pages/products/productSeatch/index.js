@@ -31,40 +31,40 @@ export default function ProductSearch({ open, onClose }) {
 
   return (
     <div>
-      {/* <Dialog
+      <Dialog
         fullScreen
         open={open}
         onClose={onClose}
         TransitionComponent={Transition}
-      > */}
-      {/* <AppBar sx={{ position: 'sticky' }}>
-        <Toolbar>
-          <IconButton edge='start' color='inherit' onClick={onClose}>
-            <ArrowBackIos />
-          </IconButton>
+      >
+        <AppBar sx={{ position: 'sticky' }}>
+          <Toolbar>
+            <IconButton edge='start' color='inherit' onClick={onClose}>
+              <ArrowBackIos />
+            </IconButton>
 
-          <SearchBox formik={formik} />
-        </Toolbar>
-      </AppBar> */}
-      {data?.products?.map((p, idx) => {
-        return (
-          <Box display={'flex'} justifyContent={'center'} mt={1} key={idx}>
-            <ProductListCard product={p} onCloseDialog={onClose} />
-          </Box>
-        );
-      })}
-      {isLoading &&
-        [1, 2].map((s, i) => (
-          <Box display={'flex'} justifyContent={'center'} mt={1} key={i}>
-            <SkeletonCard />
-          </Box>
-        ))}
-      {data?.products?.length === 0 && (
-        <Typography textAlign={'center'} variant='h6' mt={3}>
-          No matches found
-        </Typography>
-      )}
-      {/* </Dialog> */}
+            <SearchBox formik={formik} />
+          </Toolbar>
+        </AppBar>
+        {data?.products?.map((p, idx) => {
+          return (
+            <Box display={'flex'} justifyContent={'center'} mt={1} key={idx}>
+              <ProductListCard product={p} onCloseDialog={onClose} />
+            </Box>
+          );
+        })}
+        {isLoading &&
+          [1, 2].map((s, i) => (
+            <Box display={'flex'} justifyContent={'center'} mt={1} key={i}>
+              <SkeletonCard />
+            </Box>
+          ))}
+        {data?.products?.length === 0 && (
+          <Typography textAlign={'center'} variant='h6' mt={3}>
+            No matches found
+          </Typography>
+        )}
+      </Dialog>
     </div>
   );
 }
