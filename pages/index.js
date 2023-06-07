@@ -1,11 +1,13 @@
 import MyHead from '@/components/common/myHead';
 import Home from '@/components/pages/home';
+import Products from '@/components/pages/products';
 
 export default function HomePage() {
   return (
     <>
-      <a pageTitle={'Home'} />
-      <Home />
+      <MyHead pageTitle={'Home'} />
+      {/* <Home /> */}
+      <Products />
     </>
   );
 }
