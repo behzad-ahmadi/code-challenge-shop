@@ -1,3 +1,4 @@
+import useCart from '@/hooks/useCart';
 import {
   AddCircleOutline,
   RemoveCircleOutline,
@@ -15,16 +16,42 @@ import {
 } from '@mui/material';
 import { yellow } from '@mui/material/colors';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function ProductDetailsCard({
   product = {},
   showActions = true,
+  mainSx,
+  onClick,
 }) {
-  const { title, description, price, rating, images = [] } = product;
+  const { id, title, description, price, rating, images = [] } = product;
+  const [count, setCount] = useState(0);
+  const cart = useCart();
+
+  useEffect(() => {
+    setCount(1);
+  }, [id]);
+
+  const addHandler = () => setCount(count + 1);
+
+  const removeHandler = () => {
+    if (count > 1) setCount(count - 1);
+  };
 
   return (
     <>
-      <Card sx={{ minWidth: 264, maxWidth: 370, boxShadow: 0, padding: 2 }}>
+      <Card
+        sx={{
+          minWidth: 264,
+          maxWidth: 370,
+          boxShadow: 0,
+          padding: 2,
+          width: '100%',
+          cursor: onClick ? 'pointer' : 'unset',
+          ...mainSx,
+        }}
+        onClick={() => onClick && onClick()}
+      >
         {images[0] ? (
           <Image
             width={370}
@@ -74,21 +101,29 @@ export default function ProductDetailsCard({
             >
               {/* Total */}
               <Box display={'flex'}>
-                <IconButton>
+                <IconButton onClick={removeHandler}>
                   <RemoveCircleOutline />
                 </IconButton>
 
                 <Typography sx={{ my: 'auto' }} fontWeight={'bold'}>
-                  1
+                  {count}
                 </Typography>
 
-                <IconButton>
+                {/* add product */}
+                <IconButton onClick={addHandler}>
                   <AddCircleOutline />
                 </IconButton>
               </Box>
 
               {/* Add to card button */}
-              <Button variant='contained'>Add To Card</Button>
+              <Button
+                variant='contained'
+                onClick={() => {
+                  count > 0 ? cart.addToCard(product, count) : () => {};
+                }}
+              >
+                Add To Card
+              </Button>
             </Box>
           </CardActions>
         )}
