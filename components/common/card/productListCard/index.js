@@ -9,11 +9,17 @@ import {
 import Image from 'next/image';
 import { Star } from '@mui/icons-material';
 import { yellow } from '@mui/material/colors';
+import { useRouter } from 'next/router';
+import { pageRoutes } from '@/lib/config';
 
-export default function ProductListCard({ products = {} }) {
-  const { title, description, price, rating, images = [] } = products;
+export default function ProductListCard({ product = {}, onCloseDialog }) {
+  const { id, title, description, price, rating, images = [] } = product;
+  const router = useRouter();
 
-  const theme = useTheme();
+  const cardClickHandler = () => {
+    router.replace(pageRoutes.productDetails(id));
+    onCloseDialog && onCloseDialog();
+  };
 
   return (
     <>
@@ -23,8 +29,10 @@ export default function ProductListCard({ products = {} }) {
           maxWidth: 550,
           width: '100%',
           borderRadius: 5,
-          py: 1,
+          minHeight: 150,
+          cursor: 'pointer',
         }}
+        onClick={cardClickHandler}
       >
         {images[0] ? (
           <Image
@@ -36,9 +44,13 @@ export default function ProductListCard({ products = {} }) {
               marginTop: 'auto',
               marginBottom: 'auto',
               marginLeft: 9,
+              minWidth: 120,
             }}
+            alt='product image'
             quality={100}
-            src={'/images/contemplative-reptile.jpg'}
+            src={images[0]}
+            placeholder='blur'
+            blurDataURL='/images/blur.jpg'
           />
         ) : (
           <Skeleton
@@ -70,11 +82,11 @@ export default function ProductListCard({ products = {} }) {
             {description}
           </Typography>
 
-          <Box display={'flex'} justifyContent={'space-between'}>
+          <Box display={'flex'} justifyContent={'space-between'} mt={2}>
             {/* Rating */}
-            <Box display={'flex'} gap={0.5} mt={2}>
+            <Box display={'flex'} gap={0.5}>
               <Star style={{ color: yellow[500] }} fontSize={'small'} />
-              <Typography variant='button'>{5}</Typography>
+              <Typography variant='button'>{rating}</Typography>
             </Box>
 
             {/* Price */}
