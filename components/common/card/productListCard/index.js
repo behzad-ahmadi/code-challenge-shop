@@ -1,11 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Skeleton,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Card, CardContent, Skeleton, Typography } from '@mui/material';
 import Image from 'next/image';
 import { Star } from '@mui/icons-material';
 import { yellow } from '@mui/material/colors';
