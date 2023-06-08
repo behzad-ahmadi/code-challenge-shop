@@ -23,8 +23,13 @@ export default function ProductSearch({ open, onClose }) {
 
   const { data, isLoading, error } = useSWR(
     () => 'https://dummyjson.com/products/search?q=' + formik.values.search,
-    fetcher
+    fetcher,
+    { revalidateOnFocus: false, errorRetryCount: 2, refreshInterval: 0 }
   );
+
+  React.useEffect(() => {
+    console.log('', formik.values.search);
+  }, [formik.values.search]);
 
   // if (error) console.log('error', error);
   if (error) toast('Fetch product list error');
