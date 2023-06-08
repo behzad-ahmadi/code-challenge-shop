@@ -9,11 +9,24 @@ export default function useUser({
   redirectTo = '',
   redirectIfFound = false,
 } = {}) {
+  // const {
+  //   data: user,
+  //   mutate: mutateUser,
+  //   error,
+  // } = useSWR('/api/user', fetcher);
   const {
     data: user,
     mutate: mutateUser,
     error,
-  } = useSWR('/api/user', fetcher);
+  } = useSWR(
+    '/api/user',
+    (url) =>
+      axios
+        .get(url)
+        .then((res) => res)
+        .catch((e) => console.log(e)),
+    { refreshInterval: refreshInterval, revalidateOnFocus: revalidateOnFocus }
+  );
 
   useEffect(() => {
     if (error) toast('Error in getting user info', { type: 'error' });
