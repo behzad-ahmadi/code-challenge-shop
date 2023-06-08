@@ -12,21 +12,21 @@ export default function ProductDetailPage({ product }) {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const { id } = params;
+  try {
+    const { id } = params;
 
-  const product = await getProduct({ productId: id });
+    const product = await getProduct({ productId: id });
 
-  return { props: { product }, revalidate: 20 };
+    return { props: { product }, revalidate: 20 };
+  } catch (error) {
+    console.log('error', error);
+  }
 };
 
 export const getStaticPaths = async () => {
-  const { products } = await getProducts({ authToken: '' });
+  const { products } = await getProducts();
 
-  const ids = products?.map((p) => ({ params: { id: p.id.toString() } }));
+  const paths = products?.map((p) => ({ params: { id: p.id.toString() } }));
 
-  return {
-    paths: ids,
-
-    fallback: true,
-  };
+  return { paths, fallback: 'blocking' };
 };
