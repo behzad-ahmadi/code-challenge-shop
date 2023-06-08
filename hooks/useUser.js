@@ -3,6 +3,7 @@ import Router from 'next/router';
 import useSWR from 'swr';
 import { getUser } from '@/lib/api-utils';
 import { toast } from 'react-toastify';
+import { fetcher } from '@/lib/fetchers';
 
 export default function useUser({
   redirectTo = '',
@@ -12,7 +13,7 @@ export default function useUser({
     data: user,
     mutate: mutateUser,
     error,
-  } = useSWR('/api/user', () => getUser());
+  } = useSWR('/api/user', fetcher);
 
   useEffect(() => {
     if (error) toast('Error in getting user info', { type: 'error' });
