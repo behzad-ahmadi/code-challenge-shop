@@ -14,7 +14,7 @@ export default withIronSessionApiRoute(async (req, res) => {
         headers: { 'Content-Type': 'application/json', timeout: 5000 },
       }
     );
-    // console.log('user', data);
+    console.log('user', data);
     const user = { isLoggedIn: true, ...data };
 
     req.session.user = user;
