@@ -25,7 +25,7 @@ export default function useUser({
         .get(url)
         .then((res) => res)
         .catch((e) => console.log(e)),
-    { refreshInterval: refreshInterval, revalidateOnFocus: revalidateOnFocus }
+    { refreshInterval: 0, revalidateOnFocus: true }
   );
 
   useEffect(() => {
