@@ -16,9 +16,7 @@ export default function useUser({
   //   error,
   // } = useSWR('/api/user', fetcher);
   const {
-    data: {
-      data: { user },
-    },
+    data: { data: user } = {},
     mutate: mutateUser,
     error,
   } = useSWR(
