@@ -32,7 +32,7 @@ export default function ProductSearch({ open, onClose }) {
   }, [formik.values.search]);
 
   // if (error) console.log('error', error);
-  if (error) toast('Fetch product list error');
+  // if (error) toast('Fetch product list error');
 
   return (
     <div>
