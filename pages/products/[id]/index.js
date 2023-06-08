@@ -15,6 +15,8 @@ export const getStaticProps = async ({ params }) => {
   try {
     const { id } = params;
 
+    console.log('pid', id);
+
     const product = await getProduct({ productId: id });
 
     return { props: { product }, revalidate: 20 };
