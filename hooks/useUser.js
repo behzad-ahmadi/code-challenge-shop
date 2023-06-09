@@ -30,7 +30,7 @@ export default function useUser({
   );
 
   useEffect(() => {
-    console.log('us', user);
+    // console.log('us', user);
     // if (error) toast('Error in getting user info', { type: 'error' });
     if (error) console.log('Error in getting user info', error);
     // if no redirect needed, just return (example: already on /dashboard)
