@@ -12,7 +12,6 @@ import useSWR from 'swr';
 import { useFormik } from 'formik';
 import { fetcher } from '@/lib/fetchers';
 import SkeletonCard from '@/components/common/card/productListCard/skeletonCard';
-import { toast } from 'react-toastify';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />;
