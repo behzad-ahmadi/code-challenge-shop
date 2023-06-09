@@ -7,7 +7,7 @@ import Slide from '@mui/material/Slide';
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
 import SearchBox from './searchbox';
 import ProductListCard from '@/components/common/card/productListCard';
-import { Box, Typography } from '@mui/material';
+import { Alert, Box, Container } from '@mui/material';
 import useSWR from 'swr';
 import { useFormik } from 'formik';
 import { fetcher } from '@/lib/fetchers';
@@ -21,17 +21,12 @@ export default function ProductSearch({ open, onClose }) {
   const formik = useFormik({ initialValues: { search: '' } });
 
   const { data, isLoading, error } = useSWR(
-    () => 'https://dummyjson.com/products/search?q=' + formik.values.search,
+    ['/api/products/search', { q: formik.values.search }],
     fetcher,
     { revalidateOnFocus: false, errorRetryCount: 2, refreshInterval: 0 }
   );
 
-  React.useEffect(() => {
-    console.log('', formik.values.search);
-  }, [formik.values.search]);
-
-  // if (error) console.log('error', error);
-  // if (error) toast('Fetch product list error');
+  if (error) console.log('error', error);
 
   return (
     <div>
@@ -50,6 +45,7 @@ export default function ProductSearch({ open, onClose }) {
             <SearchBox formik={formik} />
           </Toolbar>
         </AppBar>
+        {/* Search result */}
         {data?.products?.map((p, idx) => {
           return (
             <Box display={'flex'} justifyContent={'center'} mt={1} key={idx}>
@@ -57,16 +53,29 @@ export default function ProductSearch({ open, onClose }) {
             </Box>
           );
         })}
+        {/* Loading state */}
         {isLoading &&
           [1, 2].map((s, i) => (
             <Box display={'flex'} justifyContent={'center'} mt={1} key={i}>
               <SkeletonCard />
             </Box>
           ))}
+        {/* No matches message */}
         {data?.products?.length === 0 && (
-          <Typography textAlign={'center'} variant='h6' mt={3}>
-            No matches found
-          </Typography>
+          <Container sx={{ mt: 5 }}>
+            <Alert severity='info' variant='filled'>
+              No matches found
+            </Alert>
+          </Container>
+        )}
+
+        {/* Error */}
+        {error && (
+          <Container sx={{ mt: 5 }}>
+            <Alert severity='error' variant='filled'>
+              Something's wrong, plese try again.
+            </Alert>
+          </Container>
         )}
       </Dialog>
     </div>
