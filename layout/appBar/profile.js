@@ -17,14 +17,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-// import Avatar from '@mui/material/Avatar';
-// import Divider from '@mui/material/Divider';
-// import Drawer from '@mui/material/Drawer';
-// import IconButton from '@mui/material/IconButton';
-// import Menu from '@mui/material/Menu';
-// import MenuItem from '@mui/material/MenuItem';
-// import useMediaQuery from '@mui/material/useMediaQuery';
-// import useTheme from '@mui/material/useTheme';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
