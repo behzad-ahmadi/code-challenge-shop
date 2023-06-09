@@ -1,6 +1,6 @@
 import ProductCart from '@/components/pages/products/produtcCart';
 import useCart from '@/hooks/useCart';
-import { ShoppingCartOutlined } from '@mui/icons-material';
+import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
 import { Badge, IconButton } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

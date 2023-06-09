@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
-import { ArrowBackIos } from '@mui/icons-material';
+import ArrowBackIos from '@mui/icons-material/ArrowBackIos';
 import SearchBox from './searchbox';
 import ProductListCard from '@/components/common/card/productListCard';
 import { Box, Typography } from '@mui/material';

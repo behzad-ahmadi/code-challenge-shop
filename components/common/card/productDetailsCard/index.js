@@ -1,9 +1,8 @@
 import useCart from '@/hooks/useCart';
-import {
-  AddCircleOutline,
-  RemoveCircleOutline,
-  Star,
-} from '@mui/icons-material';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline';
+import Star from '@mui/icons-material/Star';
+
 import {
   Box,
   Button,

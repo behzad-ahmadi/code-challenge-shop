@@ -7,7 +7,8 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline';
 import useCart from '@/hooks/useCart';
 
 export default function ProductCartCard({ product = {} }) {

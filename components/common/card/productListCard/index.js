@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Skeleton, Typography } from '@mui/material';
 import Image from 'next/image';
-import { Star } from '@mui/icons-material';
+import Star from '@mui/icons-material/Star';
 import { yellow } from '@mui/material/colors';
 import { useRouter } from 'next/router';
 import { pageRoutes } from '@/lib/config';

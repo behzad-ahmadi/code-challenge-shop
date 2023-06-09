@@ -1,5 +1,5 @@
 import ProductSearch from '@/components/pages/products/productSeatch';
-import { Search } from '@mui/icons-material';
+import Search from '@mui/icons-material/Search';
 import { IconButton } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

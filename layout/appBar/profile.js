@@ -1,18 +1,14 @@
 import { useAppTheme } from '@/hooks/useAppTheme';
 import useUser from '@/hooks/useUser';
 import { logout } from '@/lib/api-utils';
-import {
-  Brightness4,
-  Brightness7,
-  Flag,
-  Login,
-  Phone,
-  PowerSettingsNew,
-} from '@mui/icons-material';
+import Brightness4 from '@mui/icons-material/Brightness4';
+import Brightness7 from '@mui/icons-material/Brightness7';
+import Flag from '@mui/icons-material/Flag';
+import Login from '@mui/icons-material/Login';
+import Phone from '@mui/icons-material/Phone';
+import PowerSettingsNew from '@mui/icons-material/PowerSettingsNew';
 import {
   Avatar,
-  Box,
-  Dialog,
   Divider,
   Drawer,
   IconButton,
@@ -21,6 +17,14 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+// import Avatar from '@mui/material/Avatar';
+// import Divider from '@mui/material/Divider';
+// import Drawer from '@mui/material/Drawer';
+// import IconButton from '@mui/material/IconButton';
+// import Menu from '@mui/material/Menu';
+// import MenuItem from '@mui/material/MenuItem';
+// import useMediaQuery from '@mui/material/useMediaQuery';
+// import useTheme from '@mui/material/useTheme';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
