@@ -43,9 +43,8 @@ export const CartContextProvider = (props) => {
   // remove product from cart
   const remove = (product) => {
     //check if product exsits in list
-    const _product = products?.find((p) => p?.id);
+    const _product = products?.find((p) => p?.id === product.id);
 
-    //
     if (_product && _product.quantity > 1) {
       setProducts((prevState) => {
         const newState = prevState.map((p) => {
