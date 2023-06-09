@@ -37,6 +37,10 @@ export default function ProductDetailsCard({
     if (count > 1) setCount(count - 1);
   };
 
+  const addToCartHandler = () => {
+    if (count > 0) cart.addToCard(product, count);
+  };
+
   return (
     <>
       <Card
@@ -115,12 +119,7 @@ export default function ProductDetailsCard({
               </Box>
 
               {/* Add to card button */}
-              <Button
-                variant='contained'
-                onClick={() => {
-                  count > 0 ? cart.addToCard(product, count) : () => {};
-                }}
-              >
+              <Button variant='contained' onClick={addToCartHandler}>
                 Add To Card
               </Button>
             </Box>
