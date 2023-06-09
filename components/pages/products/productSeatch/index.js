@@ -73,7 +73,7 @@ export default function ProductSearch({ open, onClose }) {
         {error && (
           <Container sx={{ mt: 5 }}>
             <Alert severity='error' variant='filled'>
-              Something's wrong, plese try again.
+              {`Something's wrong, plese try again`}
             </Alert>
           </Container>
         )}
